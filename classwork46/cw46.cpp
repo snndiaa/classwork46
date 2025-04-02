@@ -1,17 +1,30 @@
 #include <iostream>
 using namespace std;
 
-void add_element(int*& arr, int& size, int element)
+void print_array(int* arr, const int size)
 {
-	int* temp = new int[size + 1];
 	for (int i = 0; i < size; i++)
 	{
-		temp[i] = arr[i];
+		cout << arr[i] << " ";
 	}
-	temp[size] = element;
-	size++;
-	delete[] arr;
-	arr = temp;
+	cout << endl;
+}
+
+int* add_element(int* arr, const int size, int element)
+{
+	int new_size = size + 1;
+	if (new_size > 0)
+	{
+		int* new_array = new int[new_size];
+		for (int i = 0; i < size; i++)
+		{
+			new_array[i] = arr[i];
+		}
+		new_array[new_size-1] = element;
+		delete[] arr;
+		return new_array;
+	}
+	return nullptr;
 }
 
 int main() 
@@ -39,18 +52,13 @@ int main()
 	cin >> new_element;
 
 	cout << "Before adding new element: ";
-	for (int i = 0; i < size; i++)
-	{
-		cout << arr[i] << " ";
-	}	
+	print_array(arr, size);
 
-	add_element(arr, size, new_element);
+	arr=add_element(arr, size, new_element);
 
 	cout << "After adding new element: ";
-	for (int i = 0; i < size; i++)
-	{
-		cout << arr[i] << " ";
-	}
+	print_array(arr, size + 1);
+
 	cout << endl;
 
 	delete[] arr;
